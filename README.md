@@ -1,6 +1,24 @@
-# Maestro-EVC
+# Maestro-EVC: Controllable Emotional Voice Conversion Guided by References and Explicit Prosody
 
-## Setting
+[![arXiv](https://img.shields.io/badge/arXiv-2508.06890-B31B1B.svg)](https://arxiv.org/abs/2508.06890)
+[![Conference](https://img.shields.io/badge/Accepted%20at-ASRU%202025-blue)](https://2025.ieeeasru.org/)
+
+Demo Page: https://maestroevc.github.io/demo/
+
+This repository contains the official implementation for our paper, **"Maestro-EVC: Controllable Emotional Voice Conversion Guided by References and Explicit Prosody."**
+
+Maestro-EVC is a controllable Emotional Voice Conversion (EVC) framework that enables the independent control of content, speaker identity, and emotional style by effectively disentangling each attribute from separate references, leading to high-quality and emotionally expressive speech synthesis.
+
+## Abstract
+
+Emotional voice conversion (EVC) aims to modify the emotional style of speech while preserving its linguistic content. In practical EVC, controllability, the ability to independently control speaker identity and emotional style using distinct references, is crucial. However, existing methods often struggle to fully disentangle these attributes and lack the ability to model fine-grained emotional expressions such as temporal dynamics. We propose Maestro-EVC, a controllable EVC framework that enables independent control of content, speaker identity, and emotion by effectively disentangling each attribute from separate references. We further introduce a temporal emotion representation and an explicit prosody modeling with prosody augmentation to robustly capture and transfer the temporal dynamics of the target emotion, even under prosody-mismatched conditions. Experimental results confirm that Maestro-EVC achieves high-quality, controllable, and emotionally expressive speech synthesis.
+
+## Prerequisites
+
+* Python 3.11.14
+
+## Setup and Installation
+
 ```bash
 git clone https://github.com/truestar2001/Maestro_EVC_for_Gaudio
 cd Maestro_EVC_for_Gaudio
@@ -9,12 +27,6 @@ conda activate mevc
 pip install -r requirements.txt
 mkdir -p checkpoint data inference/output
 ```
-
-https://drive.google.com/file/d/1CVveXsWfEruRH5ALrVx9g7qf_EiOTnfJ/view?usp=drive_link 
-
-- 위 링크에서 checkpoint 다운 후 checkpoint 폴더 안에 넣기
-
-- 사용할 wav파일들 모두 data폴더 안에 넣기 (폴더 안에 들어있어도 무관)
 
 ## Extract features
 ```bash
@@ -26,19 +38,16 @@ python extractors/speaker_embedding.py
 ```
 ## Make inference pairs
 
-- inference 폴더 안에 gaudio_pairs.txt 만들기
+- make pairs.txt in folder 'inference'
 
-- gaudio_pairs.txt는 다음과 같이 구성되어야 함.
+- pairs.txt must be formatted as:
 
 ```bash
 <content wav url>|<speaker wav url>|<emotion wav url>
 ```
-
-- speaker는 학습 때 매우 적은 화자 수(10명)으로 학습했기 때문에 generalization 안됨. git에 있는 data/EVC Speaker/0020_000006.wav 를 speaker wav로 고정하고 test.
-
-ex)
+## Training
 ```bash
-/home/Maestro_EVC/data/Deepdub Voice Clone/경도_001_00-00-00_000_00-00-11_564_EN.wav|/home/Maestro_EVC/data/EVC Speaker/0020_000006.wav|/home/Maestro_EVC/data/Original/경도_001_00-00-00_000_00-00-11_564_이쯤되니.wav
+python train.py
 ```
 
 ## Inference
